@@ -1,0 +1,10 @@
+bin/
+docs/
+img/
+release/
+build/
+phishlets/test-*
+.env
+.vscode
+GEOIP.BIN
+*GEOIP.BIN*

